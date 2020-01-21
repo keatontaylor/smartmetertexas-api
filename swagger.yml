@@ -1,0 +1,114 @@
+swagger: "2.0"
+host: "www.smartmetertexas.com"
+basePath: "/api"
+info:
+  description: "Smart Meter Texas Documentation for Unofficial API"
+  version: "1.0.0"
+  title: "Smart Meter Texas"
+
+tags:
+- name: "user"
+  description: "Operations about user account"
+schemes:
+- "https"
+paths:
+  /user/authenticate:
+    post:
+      tags:
+      - "user"
+      summary: "Authenticate user"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User Credentials"
+        required: true
+        schema:
+          $ref: "#/definitions/UserCredentials"
+      responses:
+        200:
+          description: "Login Response"
+          schema:
+            $ref: "#/definitions/UserLoginResponse"
+        400:
+          description: "Error Message"
+          schema:
+            properties:
+              errormessage:
+                type: "string"
+                enum: ["ERR-USR-USERNOTFOUND", "ERR-USR-INVALIDPASSWORDERROR"]
+  /user/getuser:
+    post:
+      tags:
+      - "user"
+      summary: "Get profile information about user"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Login Response"
+          schema:
+            $ref: "#/definitions/UserInfo"
+      
+ 
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  UserInfo:
+    type: "object"
+    properties:
+      data: 
+        type: "object"
+        properties:
+          usr_id:
+            type: "string"
+          is_rgstrd:
+            type: "boolean"
+          usr_type:
+            type: "string"
+          admin_ind:
+            type: "string"
+          co:
+            type: "string"
+          agreementaccess:
+            type: "boolean"
+          subscriptionaccess:
+            type: "boolean"
+  UserCredentials:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+      rememberMe:
+        type: "boolean"
+  UserLoginResponse:
+    type: "object"
+    properties:
+      usr_id:
+        type: "string"
+      is_rgstrd:
+        type: "boolean"
+      usr_type:
+        type: "string"
+      usr_frst_nm:
+        type: "string"
+      usr_lst_nm:
+        type: "string"
+      usr_eml:
+        type: "string"
+      lang_pref:
+        type: "string"
+      ai:
+        type: "boolean"
+      smtStatus:
+        type: "string"
+      smtStatuskey:
+        type: "string"
+      token:
+        type: "string"
