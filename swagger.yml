@@ -9,6 +9,8 @@ info:
 tags:
 - name: "user"
   description: "Operations about user account"
+- name: "On-Demand Read"
+  description: "Read the current value on the meter"
 schemes:
 - "https"
 paths:
@@ -50,8 +52,45 @@ paths:
           description: "Login Response"
           schema:
             $ref: "#/definitions/UserInfo"
-      
- 
+  /ondemandread:
+    post:
+      tags:
+      - "On-Demand Read"
+      summary: "Submit request to the meter"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Meter info"
+        required: true
+        schema:
+          $ref: "#/definitions/Meter_ESIID"      
+      responses:
+        200:
+          description: "Request successful"
+          schema:
+            $ref: "#/definitions/OnDemandRead"
+  /usage/latestodrread:
+    post:
+      tags:
+      - "On-Demand Read"
+      summary: "Check status of last on demand read"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "ESIID"
+        required: true
+        schema:
+          $ref: "#/definitions/ESIID"
+      responses:
+        200:
+          description: "pending"
+          schema:
+            $ref: "#/definitions/OdrResults"
+        
 securityDefinitions:
   api_key:
     type: "apiKey"
@@ -112,3 +151,47 @@ definitions:
         type: "string"
       token:
         type: "string"
+  OnDemandRead:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          trans_id: 
+            type: "string"
+          correlationId: 
+            type: "string"
+          statusCode: 
+            type: "string"
+          statusReason:
+            type: "string"
+  Meter_ESIID:
+    type: "object"
+    properties:
+      ESIID: 
+        type: "string"
+      MeterNumer:
+        type: "string"
+  ESIID:
+    type: "object"
+    properties:
+      ESIID:
+        type: "string"
+  OdrResults:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          odrstatus:
+            type: "string"
+            enum: ["PENDING", "COMPLETED"]
+          odrread: 
+            type: "string"
+          odrusage:
+            type: "string"
+          odrdate:
+            type: "string"
+          responseMessage:
+            type: "string"
+          
