@@ -282,7 +282,7 @@ definitions:
               type: "string"
             meterMultiplier:
               type: integer
-              exaple: 1
+              example: 1
             fullAddress:
               type: "string"
             errmsg:
@@ -308,26 +308,27 @@ definitions:
           StatusReportResponse:
             type: "object"
             properties:
-              trans_id: "string"
+              trans_id: 
+                type: "string"
               SubscriptionStatusResponse:
-              type: "array"
-              items:
-                type: "object"
-                properties:
-                  subscriptionId: 
-                    type: "string"
-                  reportType: 
-                    type: "string"
-                  subscriptionFrequency:
-                    type: "string"
-                  subscriptionType:
-                    type: "string"
-                  status:
-                    type: "string"
-                  lastReportGenerationDate:
-                    type: "string"
-                  startDate:
-                    type: "string"
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    subscriptionId: 
+                      type: "string"
+                    reportType: 
+                      type: "string"
+                    subscriptionFrequency:
+                      type: "string"
+                    subscriptionType:
+                      type: "string"
+                    status:
+                      type: "string"
+                    lastReportGenerationDate:
+                      type: "string"
+                    startDate:
+                      type: "string"
   SubId:
     type: "object"
     properties:
