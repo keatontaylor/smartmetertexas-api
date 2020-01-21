@@ -87,10 +87,67 @@ paths:
           $ref: "#/definitions/ESIID"
       responses:
         200:
-          description: "pending"
+          description: "Query response"
           schema:
             $ref: "#/definitions/OdrResults"
-        
+  /meter:
+    post:
+      tags:
+      - "user"
+      summary: "get data on meters on account"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "ESIID seems to be set to * for this end point"
+        required: true
+        schema:
+          $ref: "#/definitions/ESIID"
+      responses:
+        200:
+          description: "Meter data"
+          schema:
+            $ref: "#/definitions/Meter"
+  /reportrequeststatus:
+    post:
+      tags:
+      - "Reports"
+      summary: "Get report status"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Subscription type"
+        required: true
+        schema:
+          $ref: "#/definitions/ServiceType"
+      responses:
+        200:
+          description: "subscription info"
+          schema:
+            $ref: "#/definitions/ReportRequestStatus"
+  /subhistory:
+    post:
+      tags:
+      - "Reports"
+      summary: "Get report history status"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Subscription ID"
+        required: true
+        schema:
+          $ref: "#/definitions/SubId"
+      responses:
+        200:
+          description: "report info"
+          schema:
+            $ref: "#/definitions/SubHistory"
+  
 securityDefinitions:
   api_key:
     type: "apiKey"
@@ -194,4 +251,102 @@ definitions:
             type: "string"
           responseMessage:
             type: "string"
-          
+  Meter:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            customer:
+              type: "string"
+              example: "X"
+            email:
+              type: "string"
+              example: "Y"
+            description:
+              type: "string"
+              nullable: true
+            address:
+              type: "string"
+            city:
+              type: "string"
+            state:
+              type: "string"
+            zip:
+              type: "string"
+            esiid:
+              type: "string"
+            meterNumber:
+              type: "string"
+            meterMultiplier:
+              type: integer
+              exaple: 1
+            fullAddress:
+              type: "string"
+            errmsg:
+              type: "string"
+            recordStatus:
+              type: "string"
+            statusIndicator:
+              type: "boolean"
+            dunsNumber:
+              type: "string"
+  ServiceType:
+    type: "object"
+    properties:
+      serviceType:
+        type: "string"
+        enum: ["ADHOC", "SUBSCRIPTION"]
+  ReportRequestStatus:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          StatusReportResponse:
+            type: "object"
+            properties:
+              trans_id: "string"
+              SubscriptionStatusResponse:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  subscriptionId: 
+                    type: "string"
+                  reportType: 
+                    type: "string"
+                  subscriptionFrequency:
+                    type: "string"
+                  subscriptionType:
+                    type: "string"
+                  status:
+                    type: "string"
+                  lastReportGenerationDate:
+                    type: "string"
+                  startDate:
+                    type: "string"
+  SubId:
+    type: "object"
+    properties:
+      sub_id:
+        type: "string"
+  SubHistory:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        sub_id:
+          type: "string"
+        read_dt:
+          type: "string"
+        rpt_gen_dt:
+          type: "string"
+        status:
+          type: "string"
+        error:
+          type: "string"
+        error_msg:
+          type: "string"
