@@ -42,6 +42,8 @@ paths:
                 enum: ["ERR-USR-USERNOTFOUND", "ERR-USR-INVALIDPASSWORDERROR"]
   /user/getuser:
     post:
+      security:
+        - Bearer: []
       tags:
       - "user"
       summary: "Get profile information about user"
@@ -54,6 +56,8 @@ paths:
             $ref: "#/definitions/UserInfo"
   /ondemandread:
     post:
+      security:
+        - Bearer: []
       tags:
       - "On-Demand Read"
       summary: "Submit request to the meter"
@@ -73,6 +77,8 @@ paths:
             $ref: "#/definitions/OnDemandRead"
   /usage/latestodrread:
     post:
+      security:
+        - Bearer: []
       tags:
       - "On-Demand Read"
       summary: "Check status of last on demand read"
@@ -92,6 +98,8 @@ paths:
             $ref: "#/definitions/OdrResults"
   /meter:
     post:
+      security:
+        - Bearer: []
       tags:
       - "user"
       summary: "get data on meters on account"
@@ -111,6 +119,8 @@ paths:
             $ref: "#/definitions/Meter"
   /reportrequeststatus:
     post:
+      security:
+        - Bearer: []
       tags:
       - "Reports"
       summary: "Get report status"
@@ -130,6 +140,8 @@ paths:
             $ref: "#/definitions/ReportRequestStatus"
   /subhistory:
     post:
+      security:
+        - Bearer: []
       tags:
       - "Reports"
       summary: "Get report history status"
@@ -149,10 +161,10 @@ paths:
             $ref: "#/definitions/SubHistory"
   
 securityDefinitions:
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 definitions:
   UserInfo:
     type: "object"
@@ -267,7 +279,6 @@ definitions:
               example: "Y"
             description:
               type: "string"
-              nullable: true
             address:
               type: "string"
             city:
