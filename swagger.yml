@@ -1,5 +1,5 @@
 swagger: "2.0"
-host: "www.smartmetertexas.com"
+host: "smartmetertexas.com"
 basePath: "/api"
 info:
   description: "Smart Meter Texas Documentation for Unofficial API"
